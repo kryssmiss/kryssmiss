@@ -1,0 +1,9 @@
+{{ $action := .action }}
+{{ $active := .active }}
+{{ $isNav := .isNav | default false }}
+<a href="{{ $action.url | relURL }}"
+  {{ if $action.new_window }} target="_blank"{{ end }}
+  {{ if or $action.new_window $action.no_follow }} rel="{{ if $action.new_window }}noopener {{ end }}{{ if $action.no_follow }}nofollow{{ end }}"{{ end }}
+  class="{{ if and (eq $active true) (eq $action.style "none") }}active{{ end }}{{ if and (eq $isNav true) (eq $action.style "none") }} nav-link{{ end }}{{ if eq $action.style "link" }} text-reset{{ end }}{{ if eq $action.style "light" }} btn btn-light{{ end }}{{ if eq $action.style "primary" }} btn btn-primary{{ end }}{{ if eq $action.style "secondary" }} btn btn-secondary{{ end }}{{ if eq $action.style "info" }} btn btn-info{{ end }}{{ if eq $action.style "outline-primary" }} btn btn-outline-primary{{ end }}{{ if eq $action.style "outline-secondary" }} btn btn-outline-secondary{{ end }}{{ if eq $action.style "outline-info" }} btn btn-outline-info{{ end }}{{ if eq $action.style "outline-light" }} btn btn-outline-light{{ end }}">
+  {{ $action.label }}
+</a>

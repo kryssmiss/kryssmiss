@@ -1,0 +1,27 @@
+{{ $section := .section }}
+{{ $text_color := cond (and (eq $section.has_background true) (eq .background.background_color "primary")) "text-white" nil }}
+
+<section class="pb-5">
+  <div class="container">
+
+    <div class="py-5 rounded{{ if and $section.has_background (eq $section.background_color "primary") }} bg-primary text-white{{ end }}{{ if and $section.has_background (eq $section.background_color "light") }} bg-light{{ end }}">
+      <div class="text-center py-3">
+        {{ if $section.title }}
+          <h2 class="mb-3 fw-bold {{ $text_color }}">{{ $section.title }}</h2>
+        {{ end }}
+        {{ if $section.subtitle }}
+          <div class="mb-3 {{ $text_color }}">
+            <p>{{ $section.subtitle }}</p>
+          </div>
+        {{ end }}
+        {{ if $section.actions }}
+          <div>
+            {{ $include_dict := dict "actions" $section.actions }}
+            {{ partial "section_actions.html" $include_dict }}
+          </div>
+        {{ end }}
+      </div>
+    </div>
+
+  </div>
+</section>

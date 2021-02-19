@@ -1,0 +1,41 @@
+{{ $blog_feed_section := .blog_feed_section }}
+{{ $post := .post_page }}
+<article class="col mb-4">
+  <div class="card h-100">
+    {{ if $post.Params.image }}
+      <a href="{{ $post.URL }}">
+        <img class="card-img-top" src="{{ $post.Params.image | relURL }}" alt="{{ $post.Params.image_alt }}" />
+      </a>
+    {{ end }}
+    <div class="card-body">
+      <header>
+        {{ if $post.Params.categories }}
+          {{ $include_dict := dict "categories" $post.Params.categories "container_class" "card__meta" }}
+          {{ partial "blog_post_categories.html" $include_dict }}
+        {{ end }}
+        {{ if $blog_feed_section.title }}
+          <h3 class="h4 card-title"><a class="text-reset fw-bold text-decoration-none" href="{{ $post.URL }}">{{ $post.Params.title }}</a></h3>
+        {{ else }}
+          <h2 class="h4 card-title"><a class="text-reset fw-bold text-decoration-none"
+            href="{{ $post.URL }}">{{ $post.Params.title }}</a>
+          </h2>
+        {{ end }}
+      </header>
+      {{ if $post.Params.excerpt }}
+        <p class="card-text">{{ $post.Params.excerpt }}</p>
+      {{ end }}
+      <footer class="small text-muted">
+        <span>On <time
+            datetime="{{ $post.Date | dateFormat "2006-01-02 15:04" }}">{{ $post.Date | dateFormat "January 02, 2006" }}</time></span>
+        {{ if $post.Params.author }}
+          {{ $author := getJSON $post.Params.author }}
+          {{ if $author.link }}
+            <span> by <a class="link-info" href="{{ $author.link | relURL }}">{{ $author.first_name }} {{ $author.last_name }}</a></span>
+          {{ else }}
+            <span> by {{ $author.first_name }} {{ $author.last_name }}</span>
+          {{ end }}
+        {{ end }}
+      </footer>
+    </div>
+  </div>
+</article>

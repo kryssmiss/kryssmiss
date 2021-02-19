@@ -1,0 +1,46 @@
+{{ $section := .section }}
+<section class="pb-5">
+
+  {{ if $section.title }}
+  <div class="text-center">
+    <h2 class="mb-3">{{ $section.title }}</h2>
+  </div>
+  {{ end }}
+
+  <div class="container">
+    {{ range $feature := $section.features }}
+      <div class="row align-items-center mb-5{{ if eq $feature.image_position "right" }} flex-row-reverse{{ end }}">
+
+        {{ if $feature.image }}
+          <div class="col">
+            <img class="img-fluid" src="{{ $feature.image | relURL }}" alt="{{ $feature.image_alt }}" />
+          </div>
+        {{ end }}
+
+        <div class="col{{ if eq $feature.align "center" }} text-center{{ end }}{{ if eq $feature.align "right" }} text-end{{ end }}">
+
+          {{ if $feature.title }}
+            {{ if $section.title }}
+              <h3 class="fw-bold mb-3">{{ $feature.title }}</h3>
+            {{ else }}
+              <h2 class="fw-bold mb-3">{{ $feature.title }}</h2>
+            {{ end }}
+          {{ end }}
+          {{ if $feature.content }}
+            <div class="mb-3">
+              {{ partial "markdownify-block" $feature.content }}
+            </div>
+          {{ end }}
+          {{ if $feature.actions }}
+            <div class="btn-group">
+              {{ $include_dict := dict "actions" $feature.actions }}
+              {{ partial "section_actions.html" $include_dict }}
+            </div>
+          {{ end }}
+
+        </div>
+      </div>
+    {{ end }}
+
+  </div>
+</section>

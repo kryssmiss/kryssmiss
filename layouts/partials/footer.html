@@ -1,0 +1,47 @@
+<footer class="border-top border-1 pt-2 pb-4">
+  <div class="container">
+
+    {{ if or .Site.Params.footer.has_nav .Site.Params.footer.has_social }}
+      <div class="row justify-content-between">
+
+        {{ if $.Site.Params.footer.has_nav }}
+          <div class="col">
+            <ul class="list-unstyled list-inline">
+              {{ range $action := $.Site.Params.footer.nav_links }}
+                <li class="list-inline-item text-reset">
+                  {{ $include_dict := dict "action" $action }}
+                  {{ partial "action.html" $include_dict }}
+                </li>
+              {{ end }}
+            </ul>
+          </div>
+        {{ end }}
+
+        {{ if $.Site.Params.footer.has_social }}
+          <div class="col text-end">
+            <ul class="list-unstyled list-inline">
+              {{ range $action := $.Site.Params.footer.social_links }}
+                <li class="list-inline-item">
+                  {{ $include_dict := dict "action" $action }}
+                  {{ partial "action.html" $include_dict }}
+                </li>
+              {{ end }}
+            </ul>
+          </div>
+        {{ end }}
+
+      </div>
+    {{ end }}
+
+    <div class="small">
+      {{ if .Site.Params.footer.content }}
+        <span>{{ $.Site.Params.footer.content | safeHTML }}</span>
+      {{ end }}
+      {{ range $action := .Site.Params.footer.links }}
+        {{ $include_dict := dict "action" $action }}
+        {{ partial "action.html" $include_dict }}
+      {{ end }}
+    </div>
+
+  </div>
+</footer>

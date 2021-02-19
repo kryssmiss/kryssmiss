@@ -1,0 +1,17 @@
+{{ define "content" }}
+<article class="container py-5">
+
+  <div class="row justify-content-center">
+    <div class="col-xl-8 col-12">
+      <header>
+        <h1 class="fw-bold mb-4">{{ .Params.title }}</h1>
+      </header>
+      <div>
+        {{ .Content }}
+      </div>
+    </div>
+  </div>
+
+</article>
+
+{{ end }}

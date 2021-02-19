@@ -1,0 +1,50 @@
+{{ $section := .section }}
+{{ $background := $section.background }}
+{{ $background_image := $background.background_image | default false }}
+{{ $background_color := $background.background_color | default "white" }}
+{{ $background_opacity_pct := $background.background_image_opacity | default 100 }}
+{{ $background_opacity := mul $background_opacity_pct 0.01 }}
+{{ $background_size := $background.background_image_size | default "cover" }}
+{{ $background_repeat := $background.background_image_repeat | default "no-repeat" }}
+{{ $text_color := cond (and (eq $section.has_background true) (eq $background_color "primary")) "text-white" nil }}
+{{ $container_style := cond (and (eq $section.has_background true) (ne $background_image false)) "z-index:1;" nil }}
+
+<section
+  class="py-5 position-relative{{ if eq $background_color "white" }} bg-white{{ end }}{{ if and $section.has_background (eq $background_color "primary") }} text-white bg-primary{{ end }}{{ if and $section.has_background (eq $background_color "light") }} bg-light{{ end }}{{ if or $section.has_background $section.image }} mb-5{{ end }}">
+
+  {{ if and $section.has_background $background.background_image }}
+    <div class="bg-image"
+      style="background-image: url('{{ $background.background_image | relURL }}'); opacity: {{ $background_opacity }}; background-size: {{ $background_size }}; background-repeat: {{ $background_repeat }}">
+    </div>
+  {{ end }}
+
+  <div class="container position-relative" style="{{ $container_style }}">
+    <div class="row align-items-center{{ if eq $section.image_position "right" }} flex-row-reverse{{ end }}">
+
+      {{ if $section.image }}
+        <div class="col">
+          <img class="img-fluid" src="{{ $section.image | relURL }}" alt="{{ $section.image_alt }}" />
+        </div>
+      {{ end }}
+
+      <div class="col{{ if eq $section.align "center" }} text-center{{ end }}{{ if eq $section.align "right" }} text-end{{ end }}">
+
+        {{ if $section.title }}
+          <h1 class="mb-2 fw-bold {{ $text_color }}">{{ $section.title }}</h1>
+        {{ end }}
+        {{ if $section.subtitle }}
+          <div>
+            <p>{{ $section.subtitle }}</p>
+          </div>
+        {{ end }}
+        {{ if $section.actions }}
+          <div>
+            {{ $include_dict := dict "actions" $section.actions }}
+            {{ partial "section_actions.html" $include_dict }}
+          </div>
+        {{ end }}
+      </div>
+
+    </div>
+  </div>
+</section>

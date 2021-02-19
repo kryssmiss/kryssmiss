@@ -1,0 +1,40 @@
+{{ $section := .section }}
+<section class="mb-5">
+
+  {{ if $section.title }}
+    <div class="mt-5 mb-4">
+      <h2 class="text-center">{{ $section.title }}</h2>
+    </div>
+  {{ end }}
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+
+      {{ range $person := $section.team }}
+      {{ $person_data := getJSON $person }}
+      <div class="col mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <header>
+              <h3 class="h4 card-title">{{ $person_data.first_name }} {{ $person_data.last_name }}</h3>
+            </header>
+            {{ if $person_data.bio }}
+            <p class="card-text">
+              {{ partial "markdownify-block" $person_data.bio }}
+            </p>
+            {{ end }}
+          </div>
+          {{ if $person_data.photo }}
+          <figure class="m-0">
+            <img class="card-img-bottom" src="{{ $person_data.photo | relURL }}"
+              alt="{{ $person_data.photo_alt }}" />
+          </figure>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+
+    </div>
+  </div>
+
+</section>
