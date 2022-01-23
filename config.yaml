@@ -11,7 +11,7 @@ params:
         label: ACCUEIL
         url: /features
         style: none
-      - label: lorem-ipsum
+      - label: SOINS
         url: lorem-ipsum
         style: primary
         new_window: false
