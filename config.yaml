@@ -11,6 +11,12 @@ params:
         label: ACCUEIL
         url: /features
         style: none
+      - label: lorem-ipsum
+        url: lorem-ipsum
+        style: primary
+        new_window: false
+        no_follow: false
+        type: action
       - type: action
         label: Blog
         url: /blog
