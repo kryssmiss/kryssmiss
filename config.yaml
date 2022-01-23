@@ -4,7 +4,7 @@ params:
   description: An ultra customizable Bootstrap 5 theme for Stackbit
   header:
     type: header
-    title: Starter
+    title: Elsassoins
     has_nav: true
     nav_links:
       - type: action
